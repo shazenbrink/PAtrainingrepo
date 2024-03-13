@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "resources": [
+      {
+        "type": "Microsoft.Resources/resourceGroups",
+        "apiVersion": "2021-04-01",
+        "name": "RG_demo01",
+        "location": "West Europe"
+      },
+      {
+        "type": "Microsoft.Storage/storageAccounts",
+        "apiVersion": "2021-04-01",
+        "name": "stodemo01",
+        "location": "West Europe",
+        "sku": {
+          "name": "Standard_LRS"
+        }
+      },
+      {
+        "type": "Microsoft.Sql/servers",
+        "apiVersion": "2021-02-01-preview",
+        "name": "sqldemo01",
+        "location": "West Europe",
+        "properties": {
+          "administratorLogin": "sqladmin",
+          "administratorLoginPassword": "YourStrongPassword123!"
+        }
+      },
+      {
+        "type": "Microsoft.Sql/servers/databases",
+        "apiVersion": "2021-02-01-preview",
+        "name": "sdbdemo01",
+        "serverName": "[concat('sqldemo01', '.database.windows.net')]",
+        "location": "West Europe",
+        "sku": {
+          "name": "Basic",
+          "tier": "Basic"
+        },
+        "properties": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "maxSizeBytes": "1073741824",
+          "edition": "Basic"
+        }
+      }
+    ]
+  }
+  
